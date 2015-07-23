@@ -1,0 +1,76 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}分类列表{%endblock%}
+{%block extra_header%}
+<script>
+    $(function () {
+        $("#all").click(function () {
+            var checked_status = this.checked;
+            $("input[name=del_id]").each(function () {
+                this.checked = checked_status;
+            });
+        });
+    });
+</script>
+{% endblock%}
+        
+{% block content %}
+{% include "welcome.html" %}
+        <div>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:new_category' %}"'><span class="glyphicon glyphicon-plus"></span> 新建分类</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:export_to_category_csv' %}"'><span class="glyphicon glyphicon-save"></span> 导出</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:import_category_csv' %}"'><span class="glyphicon glyphicon-open"></span> 导入</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-trash"></span> 删除所选
+            </button>
+        </div>
+        <form method="post" action="">
+            {% csrf_token %}
+
+
+            <table class="table table-striped">
+
+                <tr class="info"><td><strong>分类名称</strong></td>
+                    <td><strong>父类名称</strong></td>
+                    <td><strong>收入/支出</strong></td>
+                    <td><strong><input type="checkbox" id="all" />全选删除?</strong></td>
+                </tr>
+
+                {% if category_list %}
+                    {% for obj in category_list %}
+                    <tr class="{% cycle ,active %}">
+                        <td data-toggle="tooltip" data-placement="left" title="编辑该分类"><a href="{% url 'jizhang:category' obj.category.id %}" >{{obj.level}}{{ obj.category.name}}</a></td>
+                        <td>{{ obj.category.p_category}}</td>
+                        <td> {{ obj.category.get_isIncome_display}} </td>
+                        <td><input type='checkbox' name="del_id" value="{{obj.category.id}}"></td>
+
+                    </tr>
+                    
+                    {% endfor %}
+                {% else %}
+                    <p>没有可用的分类</p>
+                {% endif %}
+
+            </table>
+            <!-- Modal -->
+            <div class="modal fade" backdrop="static" id="myModal" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>      
+                    <h4 class="modal-title" id="myModalLabel">确认删除?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h6>删除前请确认，删除操作不可恢复！</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">删除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+
+        {% include "footer_button.html" %}
+
+{%endblock%}

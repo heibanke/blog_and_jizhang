@@ -1,0 +1,54 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}登录{%endblock%}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 col-xs-12">
+        <h2> 欢迎来到我们站点 </h2>
+        <form action="" method="post" class="form"  role="form">
+        {% csrf_token %}
+
+        {% if messages %}
+            <ul class="errorlist">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>	
+        {% endif %}
+        
+        {% for field in form %}
+
+            {% if field.field.widget.attrs.checkbox %}
+                <div class="checkbox">
+                {{ field.errors }}
+                {{ field }}{{ field.label }} 
+                </div>
+
+            {% else %}
+                <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }} 
+                {{ field }}
+                </div>
+            {% endif %}
+
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">登录</button>
+        <button type='button' class="btn btn-primary" onclick='javascrtpt:window.location.href="{% url 'accounts:register' %}"'>注册</button>
+
+        </form>
+        
+        <h3> 在这里你可以</h3>
+        <ul>
+            <li>随时随地通过网络记账</li>
+            <li>统计分析自己每月收支</li>
+            <li>导出表格进行备份</li>
+            <li>导入以前记录的表格</li>
+        </ul>
+    </div>
+    <div class="col-sm-2"></div>
+</div>    
+{%endblock%}

@@ -1,0 +1,107 @@
+
+{% extends "base_ijizhang.html" %}
+{%block title%}收支列表{%endblock%}
+{%block extra_header%}
+<script>
+    $(function () {
+        $("#all").click(function () {
+            var checked_status = this.checked;
+            $("input[name=del_id]").each(function () {
+                this.checked = checked_status;
+            });
+        });
+    });
+</script>
+{% endblock%}
+        
+{% block content %}
+{% include "welcome.html" %}
+
+        <div>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:new_item' %}"'><span class="glyphicon glyphicon-plus"></span> 新建收支</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:export_to_item_csv' %}"'><span class="glyphicon glyphicon-floppy-save"></span> 导出</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:import_item_csv' %}"'><span class="glyphicon glyphicon-floppy-open"></span> 导入</button>
+
+            <!-- Button trigger modal -->
+
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-trash"></span> 删除所选
+            </button>
+        </div>
+
+        <form method="post" action="">
+        {% csrf_token %}
+
+            <table class="table table-striped">
+
+                <tr class="info"><td data-toggle="tooltip" data-placement="left" title="按时间排序"><strong><a href="{%url 'jizhang:items' ''%}">时间</a></strong></td>
+                    <td data-toggle="tooltip" data-placement="left" title="按价格排序"><strong><a href="{%url 'jizhang:items' 'p'%}">价格(元)</a></strong></td>
+                    <td><strong>分类</strong></td>
+                    <td><strong>备注</strong></td>
+                    <td><strong><input type="checkbox" id="all" />全选删除?</strong></td>
+                </tr>
+
+                {% if item_list %}
+                    {% for item in item_list %}
+                    <tr class="{% cycle ,active %}">
+                        <td data-toggle="tooltip" data-placement="left" title="编辑该帐单"><a href="{% url 'jizhang:item' item.id %}">{{ item.pub_date|date:"Y-m-d"}}</a></td>
+                        <td data-toggle="tooltip" data-placement="left" title="编辑该帐单"><a href="{% url 'jizhang:item' item.id %}">{{ item.price}}</a></td>
+                        <td data-toggle="tooltip" data-placement="left" title="显示该分类下帐单"><a href="{{item.category.get_absolute_url}}"> {{ item.category}}</a> </td>
+                        <td> {{ item.comment}} </td>
+                        <td><input type='checkbox' name="del_id" value="{{item.id}}"></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <p>没有可用的帐单</p>
+                {% endif %}
+
+
+            </table>
+      
+    <ul class="pagination">
+        {% if item_list.has_previous %}
+           <li><a href="?page={{ item_list.previous_page_number }}">&laquo;</a></li>
+        {% else%}
+           <li class="disable"><a>&laquo;</a></li>
+        {% endif %}
+        
+        {% for i in page_num_list %} 
+            {%if i > 0%}
+            <li {%ifequal item_list.number forloop.counter%}class="active"{%endifequal%}><a href="?page={{ i }}">{{i}}</a></li>
+            {%elif i == 0%}
+            <li><a><strong>...</strong></a></li>
+            {%endif%}
+        {% endfor %}
+        {% if item_list.has_next %}
+           <li><a href="?page={{ item_list.next_page_number }}">&raquo;</a></li>
+        {% else %}
+           <li class="disable"><a>&raquo;</a></li>
+        {% endif %}
+     </ul>
+            <!-- Modal -->
+            <div class="modal fade" backdrop="static" id="myModal" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>      
+                    <h4 class="modal-title" id="myModalLabel">确认删除?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h6>删除前请确认，删除操作不可恢复！</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">删除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </form>
+
+        {% include "footer_button.html" %}
+
+{%endblock%}
+
+
+

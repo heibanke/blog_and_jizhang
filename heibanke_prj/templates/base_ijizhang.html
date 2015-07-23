@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+
+
+    <head>
+        <title>{% block title %} 爱记账 {% endblock %}</title>
+
+        <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css">
+        <link href="/static/libs/jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+ 
+        <!--[if lt IE 9]><script src="/static/libs/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+
+        <!--[if lt IE 9]>
+          <script src="/static/libs/js/html5shiv.js"></script>
+          <script src="/static/libs/js/respond.min.js"></script>
+        <![endif]-->
+        <script src="/static/libs/jquery-ui-1.11.2/external/jquery/jquery.js"></script>
+        <script src="/static/libs/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/libs/js/d3.min.js"></script>
+        <script src="/static/libs/jquery-ui-1.11.2/jquery-ui.min.js"></script>
+        {% block extra_header %} {%endblock%}
+    </head>
+    <body>
+        <div class="container-fluid">
+        {%block content%} {%endblock%}
+        {% include "footer.html" %}
+        </div>
+    </body>
+</html>

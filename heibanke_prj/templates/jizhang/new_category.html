@@ -1,0 +1,45 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}新建/编辑分类{%endblock%}
+
+
+
+{% block content %}
+{% include "welcome.html" %}
+
+
+<form method="post" action=""  role="form" >
+{% csrf_token %}
+
+{% if out_errors %}
+<ul class="errorlist"><li>{{out_errors}}</li>
+{% endif %}
+
+
+
+{% for field in form %}
+
+    {% if field.field.widget.attrs.checkbox %}
+        <div class="checkbox">
+        {{ field.errors }}
+        <label>
+        {{ field }}{{ field.label }} 
+        </label>
+        </div>
+
+    {% else %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }} 
+        {{ field }}
+        </div>
+    {% endif %}
+
+{% endfor %}
+
+
+<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+</form>
+
+{% include "footer_button.html" %}
+
+{%endblock%}

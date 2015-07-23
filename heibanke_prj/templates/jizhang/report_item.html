@@ -1,0 +1,111 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}生成报表{%endblock%}
+
+{%block extra_header%}
+
+<script src="/static/libs/tablesorter/js/jquery.tablesorter.min.js"> </script>
+<script>
+$(function(){ $(".table-striped").tablesorter(); });
+</script>
+{%endblock%}
+
+
+
+{% block content %}
+{% include "welcome.html" %}
+
+
+<form method="post" action=""  role="form" >
+{% csrf_token %}
+
+{% if out_errors %}
+<ul class="errorlist"><li>{{out_errors}}</li>
+{% endif %}
+
+
+
+{% for field in form %}
+
+    {% if field.field.widget.attrs.checkbox %}
+        <div class="checkbox">
+        {{ field.errors }}
+        
+        {{ field }}{{ field.label }} 
+        </div>
+
+    {% else %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }} 
+        {{ field }}
+        </div>
+    {% endif %}
+
+{% endfor %}
+
+
+<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+</form>
+
+{% if table_data_shouru%}
+<table class="table table-striped tablesorter">
+    <thead>
+    <tr class="info">
+        {% if table_data_zhichu%}
+        <th>收入分类</th>
+        {%else%}
+        <th>分类</th>
+        {%endif%}
+        
+        {% for item in report_month %}
+        <th>{{item}}</th>
+        {%endfor%}
+        
+        {% if table_data_zhichu%}
+        <th>收入总和</th>
+        {%else%}
+        <th>分类总和</th>
+        {%endif%}        
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in table_data_shouru %}
+    <tr>
+        <td>{{item.name}}</td>
+        {% for price in item.data %}
+        <td>{{price}}</td>
+        {%endfor%}
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+{%endif%}
+
+{% if table_data_zhichu%}
+<table class="table table-striped tablesorter">
+    <thead>
+    <tr class="info">
+        <th>支出分类</th>
+        {% for item in report_month %}
+        <th>{{item}}</th>
+        {%endfor%}
+        <th>支出总和</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in table_data_zhichu %}
+    <tr>
+        <td>{{item.name}}</td>
+        {% for price in item.data %}
+        <td>{{price}}</td>
+        {%endfor%}
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+{%endif%}
+
+
+{% include "footer_button.html" %}
+
+{%endblock%}

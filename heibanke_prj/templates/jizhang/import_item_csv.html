@@ -1,0 +1,46 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}导入收支{%endblock%}
+
+
+
+{% block content %}
+{% include "welcome.html" %}
+
+
+<form enctype="multipart/form-data" method="post" action=""  role="form" >
+{% csrf_token %}
+
+{% if out_errors %}
+<ul class="errorlist"><li>{{out_errors}}</li>
+{% endif %}
+
+
+{% for field in form %}
+
+    {% if field.field.widget.attrs.checkbox %}
+        <div class="checkbox">
+        {{ field.errors }}
+        
+        {{ field }}{{ field.label }} 
+        </div>
+
+    {% else %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }} 
+        {{ field }}
+        </div>
+    {% endif %}
+
+{% endfor %}
+
+<p>请确保收支的分类已经导入，否则将无法正确导入收支</p>
+<button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:import_category_csv' %}"'><span class="glyphicon glyphicon-open"></span>先导入分类</button>
+<p></p>
+<p>已经导入分类了</p>
+<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>直接提交</button>
+</form>
+
+{% include "footer_button.html" %}
+
+{%endblock%}

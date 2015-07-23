@@ -1,0 +1,80 @@
+{% extends "base_ijizhang.html" %}
+{%block title%}新建/编辑收支{%endblock%}
+
+{%block extra_header%}
+<script src="/static/libs/js/date-picker.js"> </script>
+
+<script>
+    //点击快速选择，利用options的选择来更新select
+   $(document).ready(function(){
+        $("[id^=inlineRadio]").on('click', function() {
+            $("#id_category").val($(this)[0].value);
+        });
+   });
+
+  $(function() { 
+  
+    $( "#id_comment" ).autocomplete({
+      source: "/jizhang/autocomplete_comments",
+      minLength: 2,
+      select: function( event, ui ) {
+        $("#id_category").val(ui.item.category_id);
+      }
+    });
+  });   
+</script>
+{%endblock%}
+
+
+{% block content %}
+{% include "welcome.html" %}
+
+
+<form method="post" action=""  role="form" >
+{% csrf_token %}
+
+{% if out_errors %}
+<ul class="errorlist"><li>{{out_errors}}</li>
+{% endif %}
+
+
+
+{% for field in form %}
+
+    {% if field.field.widget.attrs.checkbox %}
+        <div class="checkbox">
+        {{ field.errors }}
+        
+        {{ field }}{{ field.label }} 
+        </div>
+
+    {% else %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }} 
+        {{ field }}
+        </div>
+    {% endif %}
+
+{% endfor %}
+
+{% if most_used_categorys %}
+<div>
+    <p><b>快速选择常用分类:</b></p>
+    {%for category in most_used_categorys%}
+        <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio_{{category.id}}" value={{category.id}}> {{category.name}}({{category.num_items}})
+        </label>
+    {%endfor%}
+</div>
+{%endif%}
+
+<p></p>
+<p></p>
+<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+</form>
+
+
+{% include "footer_button.html" %}
+
+{%endblock%}

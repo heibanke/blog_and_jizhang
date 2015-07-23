@@ -1,0 +1,124 @@
+
+{% extends "base_ijizhang.html" %}
+{%block title%}查找结果{%endblock%}
+{%block extra_header%}
+<link rel="stylesheet" href="/static/libs/css/pagination.css" />
+<script type="text/javascript" src="/static/libs/js/jquery.pagination.js"></script>
+<script>
+    $(function () {
+        $("#all").click(function () {
+            var checked_status = this.checked;
+            $("input[name=del_id]").each(function () {
+                this.checked = checked_status;
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+$(function(){
+	//这是一个非常简单的demo实例，让列表元素分页显示
+	//回调函数的作用是显示对应分页的列表项内容
+	//回调函数在用户每次点击分页链接的时候执行
+	//参数page_index{int整型}表示当前的索引页
+	var initPagination = function() {
+		var num_entries = $("#hiddenresult div.result").length;
+		// 创建分页
+		$("#Pagination").pagination(num_entries, {
+			num_edge_entries: 1, //边缘页数
+			num_display_entries: 4, //主体页数
+			callback: pageselectCallback,
+            prev_text: "前一页",
+            next_text: "下一页",
+			items_per_page:1 //每页显示1项
+		});
+	 }();
+	 
+	function pageselectCallback(page_index, jq){
+		var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
+		$("#Searchresult").empty().append(new_content); //装载对应分页的内容
+		return false;
+	}
+});
+</script>
+{% endblock%}
+        
+{% block content %}
+{% include "welcome.html" %}
+
+        <div>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:new_item' %}"'><span class="glyphicon glyphicon-plus"></span> 新建收支</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:export_to_item_csv' %}"'><span class="glyphicon glyphicon-floppy-save"></span> 导出</button>
+            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:import_item_csv' %}"'><span class="glyphicon glyphicon-floppy-open"></span> 导入</button>
+
+            <!-- Button trigger modal -->
+
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-trash"></span> 删除所选
+            </button>
+        </div>
+
+        <form method="post" action="">
+        {% csrf_token %}
+  
+        <div id="Searchresult">正在加载。。。</div>  
+        <div id="Pagination" class="pagination"><!-- 这里显示分页 --></div>        
+        <div id="hiddenresult" style="display:none;">
+            {%for item_list in item_pages%}
+                {{item_list}}
+                <div class="result">
+                    <table class="table table-striped">
+
+                        <tr class="info"><td data-toggle="tooltip" data-placement="left" title="按时间排序"><strong><a href="{%url 'jizhang:index_item' %}">时间</a></strong></td>
+                            <td data-toggle="tooltip" data-placement="left" title="按价格排序"><strong><a href="{%url 'jizhang:index_price_item' %}">价格(元)</a></strong></td>
+                            <td><strong>分类</strong></td>
+                            <td><strong>备注</strong></td>
+                            <td><strong><input type="checkbox" id="all" />全选删除?</strong></td>
+                        </tr>
+
+                        {% if item_list %}
+                            {% for item in item_list %}
+                            <tr class="{% cycle ,active %}">
+                                <td data-toggle="tooltip" data-placement="left" title="编辑该帐单"><a href="{% url 'jizhang:item' item.id %}">{{ item.pub_date|date:"Y-m-d"}}</a></td>
+                                <td data-toggle="tooltip" data-placement="left" title="编辑该帐单"><a href="{% url 'jizhang:item' item.id %}">{{ item.price}}</a></td>
+                                <td data-toggle="tooltip" data-placement="left" title="显示该分类下帐单"><a href="{{item.category.get_absolute_url}}"> {{ item.category}}</a> </td>
+                                <td> {{ item.comment}} </td>
+                                <td><input type='checkbox' name="del_id" value="{{item.id}}"></td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <p>没有可用的帐单</p>
+                        {% endif %}
+
+
+                    </table>
+                </div>
+            {%endfor%}
+        </div>
+            <!-- Modal -->
+            <div class="modal fade" backdrop="static" id="myModal" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>      
+                    <h4 class="modal-title" id="myModalLabel">确认删除?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h6>删除前请确认，删除操作不可恢复！</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">删除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </form>
+
+        {% include "footer_button.html" %}
+
+{%endblock%}
+
+
+
