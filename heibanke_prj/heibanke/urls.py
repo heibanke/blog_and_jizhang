@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^accounts/',include('accounts.urls',namespace='accounts')),	
 	url(r'^jizhang/',include('jizhang.urls',namespace='jizhang')),
-	url(r'^$',include('jizhang.urls',namespace='jizhang')),
+	#url(r'^$',include('zinnia.urls',namespace='zinnia')),
     url(r'^blog/',include('zinnia.urls',namespace='zinnia')),
     url(r'^comments/',include('django_comments.urls')),
 ]

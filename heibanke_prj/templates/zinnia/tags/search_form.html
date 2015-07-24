@@ -1,0 +1,23 @@
+{% load i18n %}
+<form method="get" id="main_searchform" action="{% url 'zinnia:entry_search' %}" class="well form-search form-horizontal">
+  <div class="form-group">
+    <div class="input-group col-xs-12 col-sm-12 col-md-11 col-lg-11" id="search-form">
+      <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge form-control" />
+      <p class="help-block">
+        {% trans '你可以用减号 - 来排除关键词组, &quot;双引号&quot; 来精确词组查找, 用 AND/OR 进行布尔操作, 还可以组合后进行复杂查询.' %}
+      </p>
+    </div>
+
+    <div class="visible-xs visible-sm col-xs-12 col-sm-12 clearfix">
+      <button type="submit" name"submit" class="btn btn-default">
+        {% trans "搜索" %}
+      </button>
+    </div>
+
+    <div class="visible-md visible-lg col-md-1 col-lg-1">
+      <button type="submit" name"submit" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </div>
+  </div>
+</form>

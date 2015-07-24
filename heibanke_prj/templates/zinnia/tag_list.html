@@ -1,0 +1,22 @@
+{% extends "zinnia:zinnia/tag_list.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>{% trans "标签列表" %}</h2>
+
+<ul class="list-group">
+  {% for object in object_list %}
+  <li class="list-group-item">
+    <a href="{% url 'zinnia:tag_detail' object %}"
+       title="{% blocktrans with tag=object %}Show all entries tagged by {{ tag }}{% endblocktrans %}">{{ object }}</a>
+    <span class="badge">
+      {% blocktrans count entry_count=object.count %}{{ entry_count }} 篇{% plural %}{{ entry_count }} 篇{% endblocktrans %}
+    </span>
+  </li>
+  {% empty %}
+  <li>
+    {% trans "还没有标签." %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

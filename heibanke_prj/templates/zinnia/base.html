@@ -1,0 +1,93 @@
+{% extends "zinnia:zinnia/base.html" %}
+{% load zinnia i18n %}
+
+{% block sidebar %}
+<aside id="widget-welcome" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "欢迎!" %}
+  </div>
+  <div class="panel-body">
+    <p>
+      {% trans "这里是黑板客的博客." %}
+    </p>
+    <p>
+      {% trans "欢迎喜欢Python的同学投稿到heibanke_at_aliyun.com" %}
+    </p>
+  </div>
+</aside>
+<aside id="widget-categories" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "分类" %}
+  </div>
+  {% get_categories %}
+</aside>
+<aside id="widget-authors" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "作者" %}
+  </div>
+  {% get_authors %}
+</aside>
+<aside id="widget-recents" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "最近文章" %}
+  </div>
+  {% get_recent_entries %}
+</aside>
+<aside id="widget-comments" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "最近评论" %}
+  </div>
+  {% get_recent_comments %}
+</aside>
+<aside id="widget-linkbacks" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "最近linkbacks" %}
+  </div>
+  {% get_recent_linkbacks %}
+</aside>
+<aside id="widget-randoms" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "随机文章" %}
+  </div>
+  {% get_random_entries %}
+</aside>
+<aside id="widget-populars" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "最热文章" %}
+  </div>
+  {% get_popular_entries %}
+</aside>
+{% if user.is_authenticated %}
+<aside id="widget-tools" class="widget panel panel-danger">
+  <div class="panel-heading">
+    {% trans "工具" %}
+  </div>
+  <ul class="list-group">
+    {% if perms.zinnia %}
+    <li class="list-group-item">
+      <a href="{% url 'admin:app_list' 'zinnia' %}" title="{% trans "管理" %}">
+        <span class="glyphicon glyphicon-book"></span>
+        {% trans "管理" %}
+      </a>
+    </li>
+    {% endif %}
+    {% if perms.zinnia.add_entry %}
+    <li class="list-group-item">
+      <a href="{% url 'admin:zinnia_entry_add' %}" title="{% trans "发布文章" %}">
+        <span class="glyphicon glyphicon-pencil"></span>
+        {% trans "发布文章" %}
+      </a>
+    </li>
+    {% endif %}
+    {% block admin-tools %}
+    {% endblock admin-tools %}
+    <li class="list-group-item">
+      <a href="{% url 'admin:logout' %}" title="{% trans "注销" %}">
+        <span class="glyphicon glyphicon-off"></span>
+        {% trans "注销" %}
+      </a>
+    </li>
+  </ul>
+</aside>
+{% endif %}
+{% endblock sidebar %}

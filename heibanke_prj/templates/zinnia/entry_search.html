@@ -1,0 +1,26 @@
+{% extends "zinnia:zinnia/entry_search.html" %}
+{% load i18n zinnia %}
+
+{% block content-title %}
+<h1>'{{ pattern }}'{% trans "的搜索结果" %} </h1>
+
+{% if error %}
+<p class="alert alert-error">{{ error }}</p>
+{% endif %}
+
+{% if object_list %}
+<p class="alert alert-success">
+  {% blocktrans count entry_count=paginator.count %}找到 {{ entry_count }} 篇{% plural %}找到 {{ entry_count }} 篇{% endblocktrans %}
+</p>
+{% endif %}
+{% endblock content-title %}
+
+{% block content-loop %}
+{% if not error %}
+{% for object in object_list %}
+  {% include object.content_template with object_content=object.html_preview continue_reading=1 %}
+{% empty %}
+<p class="alert alert-info">{% trans "什么也没找到." %}</p>
+{% endfor %}
+{% endif %}
+{% endblock content-loop %}

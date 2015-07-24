@@ -114,6 +114,10 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 STATICFILES_DIRS = (   
     ("libs",os.path.join(STATIC_ROOT,"libs").replace('\\','/')),  
+    ("admin",os.path.join(STATIC_ROOT,"admin").replace('\\','/')),
+    ("zinnia",os.path.join(STATIC_ROOT,"zinnia").replace('\\','/')), 
+    ("zinnia_bootstrap",os.path.join(STATIC_ROOT,"zinnia_bootstrap").replace('\\','/')), 
+    ("zinnia_wymeditor",os.path.join(STATIC_ROOT,"zinnia_wymeditor").replace('\\','/')), 
 )
 
 LOGIN_REDIRECT_URL = '/accounts/'
