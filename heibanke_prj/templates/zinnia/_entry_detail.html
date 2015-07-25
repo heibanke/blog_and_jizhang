@@ -1,0 +1,11 @@
+{% extends "zinnia/_entry_detail_base.html" %}
+{% load comments i18n %}
+{% block entry-discussions %}
+<p class="entry-discussions">
+  <span class="glyphicon glyphicon-comment"></span> <strong>{% trans "评论" %}</strong> :
+  <a href="{{ object.get_absolute_url }}#comments"
+     title="{% blocktrans with object=object.title %}Comments on {{ object }}{% endblocktrans %}">
+    <span class="ds-thread-count" data-thread-key="{{object.pk}}" data-count-type="comments">暂无评论</span>
+  </a>
+</p>
+{% endblock entry-discussions %}

@@ -134,5 +134,7 @@ CACHES = {
     }
 }
 
+ZINNIA_MARKUP_LANGUAGE='markdown'  #markdown or restructuredtext
+
 
 from settings_local import *

@@ -1,5 +1,18 @@
 {% extends "zinnia:zinnia/entry_detail_base.html" %}
-{% load i18n zinnia %}
+{% load static i18n zinnia %}
+
+
+{% block link %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "zinnia_threaded_comments/css/comment-reply.css" %}" />
+{% endblock link %}
+
+{% block script %}
+  {{ block.super }}
+  {% if object.comments_are_open %}<script type="text/javascript" src="{% static "zinnia_threaded_comments/js/comment-reply.js" %}"></script>{% endif %}
+{% endblock %}
+
+
 
 {% block entry-widgets %}
 <aside class="entry-widgets" role="complementary">
@@ -13,7 +26,7 @@
     <ul class="list-group">
       {% for entry in entry_related %}
       <li class="list-group-item">
-	<a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
+  <a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
       </li>
       {% endfor %}
     </ul>
@@ -21,6 +34,7 @@
   {% endif %}
   {% endwith %}
   {% endblock entry-related-entries %}
+
   {% block entry-similar-entries %}
   <div class="entry-similar panel panel-default">
     <div class="panel-heading">
@@ -29,6 +43,7 @@
     {% get_similar_entries %}
   </div>
   {% endblock entry-similar-entries %}
+  
   {% block entry-previous-next-entries %}
   <div class="entry-prev-next">
     <ul class="pager">
@@ -56,147 +71,18 @@
 </aside>
 {% endblock entry-widgets %}
 
+
 {% block entry-pingbacks %}
-{% if object.pingback_count %}
-<section id="pingbacks" class="panel panel-info">
-  <div class="panel-heading">
-    {% trans "Pingbacks" %}
-  </div>
-  {% with pingback_list=object.pingbacks %}
-  {% block pingbacks-loop %}
-  <ol id="pingback-list" class="list-group">
-    {% for pingback in pingback_list %}
-    <li id="pingback-{{ pingback.pk }}" class="pingback vcard list-group-item {% cycle box1,box2 %}">
-      {% block pingback-info %}
-      <p class="pingback-info">
-	<a href="{{ pingback.url }}" rel="external nofollow"
-           class="fn url org">{{ pingback.name }}</a>
-	{% trans "on" context "on date" %}
-        <abbr class="pingback-published" title="{{ pingback.submit_date|date:"c" }}">
-          {{ pingback.submit_date|date:"SHORT_DATETIME_FORMAT" }}
-        </abbr>
-        <a href="#pingback-{{ pingback.pk }}"
-           id="c{{ pingback.pk }}" class="anchor-link"
-           title="{% trans "Direct link to this pingback" %}">#</a>
-      </p>
-      {% endblock pingback-info %}
-      {% block pingback-content %}
-      <p class="pingback-content">
-	{{ pingback.comment }}
-      </p>
-      {% endblock pingback-content %}
-    </li>
-    {% endfor %}
-  </ol>
-  {% endblock pingbacks-loop %}
-  {% endwith %}
-</section>
-{% endif %}
-{% block pingbacks-status %}
-{% if object.pingbacks_are_open %}
-<p>{% trans "Pingbacks开放." %}</p>
-{% else %}
-<p>{% trans "Pingbacks关闭." %}</p>
-{% endif %}
-{% endblock pingbacks-status %}
 {% endblock entry-pingbacks %}
 
 {% block entry-trackbacks %}
-{% if object.trackback_count %}
-<section id="trackbacks" class="panel panel-info">
-  <div class="panel-heading">
-    {% trans "Trackbacks" %}
-  </div>
-  {% with trackback_list=object.trackbacks %}
-  {% block trackbacks-loop %}
-  <ol id="trackback-list" class="list-group">
-    {% for trackback in trackback_list %}
-    <li id="trackback-{{ trackback.pk }}" class="trackback vcard list-group-item {% cycle box1,box2 %}">
-      {% block trackback-info %}
-      <p class="trackback-info">
-	<a href="{{ trackback.url }}" rel="external nofollow"
-           class="fn url org">{{ trackback.name }}</a>
-	{% trans "on" context "on date" %}
-        <abbr class="trackback-published" title="{{ trackback.submit_date|date:"c" }}">
-          {{ trackback.submit_date|date:"SHORT_DATETIME_FORMAT" }}
-        </abbr>
-        <a href="#trackback-{{ trackback.pk }}"
-           id="c{{ trackback.pk }}" class="anchor-link"
-           title="{% trans "Direct link to this trackback" %}">#</a>
-      </p>
-      {% endblock trackback-info %}
-      {% block trackback-content %}
-      <p class="trackback-content">
-	{{ trackback.comment }}
-      </p>
-      {% endblock trackback-content %}
-    </li>
-    {% endfor %}
-  </ol>
-  {% endblock trackbacks-loop %}
-  {% endwith %}
-</section>
-{% endif %}
-{% block trackbacks-status %}
-{% if object.trackbacks_are_open %}
-<p>
-  <a href="{% url 'zinnia:entry_trackback' object.pk %}" rel="trackback">
-    {% trans "Trackback URL" %}</a>
-</p>
-{% endif %}
-{% endblock trackbacks-status %}
 {% endblock entry-trackbacks %}
 
 {% block entry-comments %}
-{% if object.comment_count %}
-<section id="comments" class="panel panel-info">
-  <div class="panel-heading">
-    {% trans "评论" %}
-  </div>
-  {% with comment_list=object.comments %}
-  {% block comments-loop %}
-  <ol id="comment-list" class="list-group">
-    {% for comment in comment_list %}
-    <li id="comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
-        class="comment vcard list-group-item {% cycle box1,box2 %}{% if comment.user %} authenticated-comment{% if comment.user.is_staff %} staff-comment{% endif %}{% if comment.user.is_superuser %} superuser-comment{% endif %}{% endif %}">
-      {% block comment-info %}
-      <p class="comment-info">
-      {% block comment-image %}
-      <img src="{% get_gravatar comment.email 60 "G" %}"
-           class="gravatar photo img-thumbnail" alt="{{ comment.name }}" />
-      {% endblock comment-image %}
-	{% if comment.url %}
-	<a href="{{ comment.url }}" rel="external nofollow"
-           class="fn url">{{ comment.name }}</a>
-	{% else %}
-	<span class="fn">{{ comment.name }}</span>
-	{% endif %}
-	{% trans "on" context "on date" %}
-        <abbr class="comment-published" title="{{ comment.submit_date|date:"c" }}">
-          {{ comment.submit_date|date:"SHORT_DATETIME_FORMAT" }}
-        </abbr>
-        <a href="#comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
-           id="c{{ comment.pk }}" class="anchor-link"
-           title="{% trans "Direct link to this comment" %}">#</a>
-      </p>
-      {% endblock comment-info %}
-      {% block comment-content %}
-      {{ comment.comment|linebreaks }}
-      {% endblock comment-content %}
-    </li>
-    {% endfor %}
-  </ol>
-  {% endblock comments-loop %}
-  {% endwith %}
-</section>
-{% else %}
-{% if object.comments_are_open %}
-<p>{% trans "还没有评论." %}</p>
-{% else %}
-<p>{% trans "评论已关闭." %}</p>
-{% endif %}
-{% endif %}
+<a name="comments" id="comments" ></a>
+<div class="ds-thread" data-thread-key="{{entry.pk}}" data-title="{{entry.title}}" data-url="http://{{ request.get_host }}{{ request.get_full_path }}"></div>
 {% endblock entry-comments %}
+
 
 {% block admin-tools %}
 {% if perms.zinnia.change_entry %}

@@ -39,12 +39,14 @@
   </div>
   {% get_recent_comments %}
 </aside>
+<!--
 <aside id="widget-linkbacks" class="widget panel panel-default">
   <div class="panel-heading">
     {% trans "最近linkbacks" %}
   </div>
   {% get_recent_linkbacks %}
 </aside>
+-->
 <aside id="widget-randoms" class="widget panel panel-default">
   <div class="panel-heading">
     {% trans "随机文章" %}
@@ -91,3 +93,25 @@
 </aside>
 {% endif %}
 {% endblock sidebar %}
+
+
+<!-- duoshuo -->
+{% block script %}
+{{block.super}}
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"heibanke"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+{% endblock %}
+
+
+

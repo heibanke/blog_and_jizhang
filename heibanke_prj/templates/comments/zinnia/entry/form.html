@@ -1,5 +1,7 @@
 {% load comments i18n %}
 {% load firstof from future %}
+
+<!--
 <form action="{% comment_form_target %}" method="post" id="comment-form" class="well form-horizontal">
   <div>{% csrf_token %}</div>
   {% if form.non_field_errors %}
@@ -8,7 +10,7 @@
   </div>
   {% endif %}
   <fieldset>
-    <legend>{% trans "Post your comment" %}</legend>
+    <legend>{% trans "发布你的评论" %}</legend>
     <input type="hidden" name="next" value="{% url 'zinnia:comment_success' %}"/>
     {% for field in form %}
     {% if field.is_hidden %}{{ field }}{% else %}
@@ -31,12 +33,13 @@
     {% endfor %}
     {% if user.is_authenticated %}
     <p class="auth">
-      {% trans "Comment as" %} <strong>{% firstof user.get_full_name user.get_username %}</strong>. <a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a>.
+      <strong>{% firstof user.get_full_name user.get_username %}</strong>{% trans "已登录" %} . <a href="{% url 'admin:logout' %}">{% trans "注销" %}</a>.
     </p>
     {% endif %}
     <p class="submit">
-      <input type="submit" name="submit" class="submit-post btn btn-primary submit-preview" value="{% trans "Post" %}" />
-      <input type="submit" name="preview" class="submit-preview btn btn-default submit-post" value="{% trans "Preview" %}" />
+      <input type="submit" name="submit" class="submit-post btn btn-primary submit-preview" value="{% trans "发布" %}" />
+      <input type="submit" name="preview" class="submit-preview btn btn-default submit-post" value="{% trans "预览" %}" />
     </p>
   </fieldset>
 </form>
+-->

@@ -13,6 +13,8 @@
     <link rel="pingback" href="/xmlrpc/" />
     <link rel="home" href="{% url 'zinnia:entry_archive_index' %}" />
     <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.min.css" %}" />
+    <link rel="stylesheet" href="{% static "libs/highlightjs/monokai_sublime.min.css" %}" />  
+
     <style type="text/css">
       body {
         padding-top: 70px;
@@ -93,7 +95,7 @@
             <li class="divider-vertical"></li>
             <li>
               <a href="{% url 'zinnia:entry_latest_feed' %}" title="{% trans "RSS Feed of latest entries" %}" class="feeds">
-                {% trans "RSS Feed" %}
+                {% trans "RSS源" %}
               </a>
             </li>
           </ul>
@@ -138,5 +140,8 @@
     </footer>
     <script type="text/javascript" src="{% static "zinnia_bootstrap/assets/js/jquery.js" %}"></script>
     <script type="text/javascript" src="{% static "zinnia_bootstrap/bootstrap/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "libs/highlightjs/highlight.min.js" %}"></script>
+    
+    <script >hljs.initHighlightingOnLoad();</script>  
   </body>
 </html>

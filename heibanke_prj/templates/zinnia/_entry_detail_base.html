@@ -128,12 +128,15 @@
         {% trans "抢沙发!" %}
       </a>
       {% else %}
-      {% trans "Comments are closed." %}
+      {% trans "评论已关闭." %}
       {% endif %}
       {% endif %}
       {% endwith %}
       {% endblock entry-comments %}
+
+      
       {% block entry-pingbacks %}
+      <!--
       {% with pingback_count=object.pingback_count %}
       {% if pingback_count %}
       , <a href="{{ object.get_absolute_url }}#pingbacks" title="{% blocktrans with object=object.title %}Pingbacks on {{ object }}{% endblocktrans %}">
@@ -149,8 +152,10 @@
         {% blocktrans count trackback_count=trackback_count %}{{ trackback_count }} trackback{% plural %}{{ trackback_count }} trackbacks{% endblocktrans %}
       </a>
       {% endif %}
-      {% endwith %}
+      {% endwith %}-->
       {% endblock entry-trackbacks %}
+      
+      
     </p>
     {% endblock entry-discussions %}
   </footer>
