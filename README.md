@@ -7,7 +7,7 @@
 ##blog-and-jizhang有哪些功能？
 
 
-* blog基于zinnia
+* blog基于django-blog-zinnia
 * 整合了highlightjs代码高亮
 * 整合了多说评论
 * 便捷的记账分类管理
@@ -16,11 +16,14 @@
 
 
 ##安装
-* 安装django>=1.8
-* 安装zinnia
+* 安装django>=1.8.3
+* 安装django-blog-zinnia
+* 安装django-app-namespace-template-loader
 * 安装zinnia-theme-bootstrap
 * 安装zinnia-wysiwyg-wymeditor
-* 安装Markdown
+* 设置settings_local.py，配置数据库，refresh.db.sh
+* 设置upload路径权限
+* 设置属性chown  -R nginx:nginx directoryname
 * python manage.py migrate
 * python manage.py runserver localhost:8080
 

@@ -38,7 +38,7 @@ def login(request):
         form=LoginForm(request.POST.copy())
         if form.is_valid():
             _login(request,form.cleaned_data["username"],form.cleaned_data["password"])
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/jizhang")
     template_var["form"]=form        
     return render_to_response("accounts/login.html",template_var,context_instance=RequestContext(request))
     
