@@ -94,7 +94,7 @@ def categorys(request):
     if request.method == 'POST':
         del_id = request.POST.getlist('del_id')
         for category_id in del_id:
-            del_category = get_object_or_404(Category, id=category_id)
+            del_category = get_object_or_404(Category, id=int(category_id))
             del_category.delete()
 
     category_list = Category.objects.filter(user__username=request.user.username).filter(p_category__isnull=True)
@@ -120,8 +120,7 @@ def first_login(request):
         first_login_category(request.user.id)
         category_list = Category.objects.filter(user__username=request.user.username).order_by('p_category')
     
-    context = {'category_list': category_list,'username':request.user.username}
-    return render_to_response('jizhang/categorys.html', RequestContext(request,context))	
+    return HttpResponseRedirect("/jizhang/categorys")	
 
 # new item view	
 @login_required	
@@ -416,7 +415,7 @@ def export_to_category_csv(request):
     return response
     
     
-def handle_uploaded_file_item(f):
+def handle_uploaded_file_item(f, request):
     destination = open('upload/csv/name.csv','wb')
     for chunk in f.chunks(): 
         destination.write(chunk)
@@ -478,7 +477,7 @@ def import_item_csv(request):
     if request.method == 'POST':
         form = UpLoadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            handle_uploaded_file_item(request.FILES['upLoadFile'])
+            handle_uploaded_file_item(request.FILES['upLoadFile'], request)
             return HttpResponseRedirect("/jizhang")
            
     else:
