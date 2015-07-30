@@ -20,8 +20,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^accounts/',include('accounts.urls',namespace='accounts')),	
+	url(r'^accounts/',include('accounts.urls',namespace='accounts')),
 	url(r'^jizhang/',include('jizhang.urls',namespace='jizhang')),
+    url(r'^lesson/',include('lesson.urls',namespace='lesson')),
 	#url(r'^$',include('zinnia.urls',namespace='zinnia')),
     url(r'^blog/',include('zinnia.urls',namespace='zinnia')),
     url(r'^comments/',include('django_comments.urls')),

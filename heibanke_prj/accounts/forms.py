@@ -7,8 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class RegisterForm(forms.Form):
-    username=forms.CharField(label=_(u"昵称"),max_length=20,widget=forms.TextInput(attrs={'size': 20,'class':"form-control"}))
-    email=forms.EmailField(label=_(u"邮件"),max_length=20,widget=forms.EmailInput(attrs={'size': 20,'class':"form-control"}))    
+    username=forms.CharField(label=_(u"昵称"),max_length=40,widget=forms.TextInput(attrs={'size': 40,'class':"form-control"}))
+    email=forms.EmailField(label=_(u"邮件"),max_length=40,widget=forms.EmailInput(attrs={'size': 40,'class':"form-control"}))    
     password=forms.CharField(label=_(u"密码"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
     re_password=forms.CharField(label=_(u"重复密码"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
 
@@ -39,8 +39,8 @@ class RegisterForm(forms.Form):
 
 			
 class LoginForm(forms.Form):
-    username=forms.CharField(label=_(u"昵称"),max_length=20,widget=forms.TextInput(attrs={'size': 20,'class':"form-control"}))
-    password=forms.CharField(label=_(u"密码"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
+    username=forms.CharField(label=_(u"昵称"),max_length=40,widget=forms.TextInput(attrs={'size': 40,'class':"form-control"}))
+    password=forms.CharField(label=_(u"密码"),max_length=40,widget=forms.PasswordInput(attrs={'size': 40,'class':"form-control"}))
 
 
 	

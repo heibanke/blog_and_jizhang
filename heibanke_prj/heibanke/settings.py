@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django_comments',
 	'accounts',
 	'jizhang',
+    'lesson',
     'mptt',
     'tagging',
     'zinnia_bootstrap',#zinnia_foundation,zinnia_bootstrap
