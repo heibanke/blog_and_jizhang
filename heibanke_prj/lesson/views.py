@@ -36,7 +36,7 @@ def scrapy_ex00(request,pk=None):
 
 
     if not pk:
-        return HttpResponseNotFound(u'<h1>你需要在网址后输入数字%d</h1>'%candidate_list[start_index])
+        return HttpResponseNotFound(u'<h1>你需要在网址后输入数字<strong>%d</strong></h1>'%candidate_list[start_index])
 
     else:    
         try:
@@ -54,7 +54,7 @@ def scrapy_ex00(request,pk=None):
                         str_help = u'还有一大波数字马上就要到来...'
                     else:
                         str_help = u'老实告诉你吧, 这样的数字还有上百个'
-                    html = u"<html><body><h1>下一个你需要输入的数字是%d. %s</h1></body></html>" % (candidate_list[index_num+1],str_help)
+                    html = u"<html><body><h1>下一个你需要输入的数字是<strong>%d</strong>. %s</h1></body></html>" % (candidate_list[index_num+1],str_help)
                 return HttpResponse(html)            
         except:
 

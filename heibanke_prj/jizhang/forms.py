@@ -14,7 +14,7 @@ class ItemForm(ModelForm):
 
     class Meta:
         model = Item
-        fields = ('category', 'price', 'pub_date', 'comment')
+        fields = ('pub_date', 'category', 'price', 'comment')
 		
     def save(self):
         new_item = Item(category=self.cleaned_data['category'],

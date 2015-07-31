@@ -119,18 +119,30 @@ def first_login(request):
 # new item view	
 @login_required	
 def new_item(request):
+    last_save_item=""    
     if request.method == 'POST':
+        return_list=request.POST.get('return_list')
+        add_another=request.POST.get('add_another')
         form = ItemForm(request,data=request.POST)
-
         if form.is_valid():
             new_item = form.save()
             new_item.save()
-            return HttpResponseRedirect("/jizhang")
+            if not return_list:
+                #继续新建
+                form = ItemForm(request,initial={'pub_date':timezone.now().date()})
+                if new_item.category.isIncome:
+                    isIncome=u"收入"
+                else:
+                    isIncome=u"支出"
+                last_save_item=u'您刚提交的"'+new_item.category.name+u'"分类下"'+str(new_item.price)+u'"元"'+isIncome+u"已保存"
+            else:
+                #返回列表
+                return HttpResponseRedirect("/jizhang")
     else:
         form = ItemForm(request,initial={'pub_date':timezone.now().date()})
 
     most_used_categorys = Category.objects.filter(user__username=request.user.username).annotate(num_items=Count('item')).filter(num_items__gt=0).order_by('-num_items')[:8]
-    context = {'form':form,'username':request.user.username,'most_used_categorys':most_used_categorys}
+    context = {'last_save_item':last_save_item,'form':form,'username':request.user.username,'most_used_categorys':most_used_categorys}
     return render_to_response('jizhang/new_item.html',RequestContext(request,context))
 
 	
@@ -152,6 +164,7 @@ def new_category(request):
 @login_required	
 def item(request,pk):
     if request.method == 'POST':
+
         form = ItemForm(request,data=request.POST)
         if form.is_valid():
             new_item = form.save()
@@ -505,6 +518,7 @@ def import_category_csv(request):
 @login_required    
 def autocomplete_comments(request):
     term = request.GET.get('term')
+
     if not term:
         items=Item.objects.filter(category__user__username=request.user.username)[:12]
     else:
@@ -523,7 +537,7 @@ def autocomplete_comments(request):
                              "label": item.comment+"--"+item.category.name,
                              "value": item.comment
                              })
-    return HttpResponse(json.dumps(json_comments), mimetype="application/json") 
+    return HttpResponse(json.dumps(json_comments), content_type="application/json") 
         
 	
     

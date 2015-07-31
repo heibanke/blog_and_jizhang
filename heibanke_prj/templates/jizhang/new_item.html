@@ -29,7 +29,7 @@
 {% block content %}
 {% include "welcome.html" %}
 
-
+<p><strong>{{last_save_item}}</strong></p>
 <form method="post" action=""  role="form" >
 {% csrf_token %}
 
@@ -71,7 +71,8 @@
 
 <p></p>
 <p></p>
-<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+<button type="submit" class="btn btn-primary" name="return_list" value="1"><span class="glyphicon glyphicon-ok"></span> 保存并返回列表</button>
+<button type="submit" class="btn btn-primary" name="add_another" value="2"><span class="glyphicon glyphicon-ok"></span> 保存并继续新建</button>
 </form>
 
 
