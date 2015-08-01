@@ -24,6 +24,6 @@ urlpatterns = [
 	url(r'^jizhang/',include('jizhang.urls',namespace='jizhang')),
     url(r'^lesson/',include('lesson.urls',namespace='lesson')),
 	#url(r'^$',include('zinnia.urls',namespace='zinnia')),
-    url(r'^blog/',include('zinnia.urls',namespace='zinnia')),
+    url(r'^',include('zinnia.urls',namespace='zinnia')),
     url(r'^comments/',include('django_comments.urls')),
 ]
