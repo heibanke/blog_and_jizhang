@@ -6,6 +6,9 @@ from django.shortcuts import render_to_response,render ,get_object_or_404
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
 
+from django.views.decorators.csrf import csrf_exempt
+
+
 import csv, json
 
 #myApp package
@@ -62,6 +65,7 @@ def scrapy_ex00(request,pk=None):
 
 
 # form post example
+@csrf_exempt
 def scrapy_ex01(request):
     
     if request.method == 'POST':

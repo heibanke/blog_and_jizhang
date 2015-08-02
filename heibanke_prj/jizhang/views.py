@@ -393,7 +393,7 @@ def export_to_item_csv(request):
         pass
     else:
         for item in items:
-            writer.writerow((item.pub_date, item.price, gb_encode(item.category.name), gb_encode(item.comment)))
+            writer.writerow((item.pub_date.strftime("%m/%d/%Y"), item.price, gb_encode(item.category.name), gb_encode(item.comment)))
 
     return response
 
@@ -409,6 +409,7 @@ def export_to_category_csv(request):
 
 
     writer.writerow((gb_encode(u'父类名称'),gb_encode(u'类别名称'),gb_encode(u'是否收入')))
+    """
     categorys = Category.objects.filter(user__username=request.user.username).order_by('p_category')
     if not categorys:
         pass
@@ -418,6 +419,22 @@ def export_to_category_csv(request):
                 writer.writerow((P_CATEGORY_NULL_NAME, gb_encode(category.name), category.isIncome))
             else:
                 writer.writerow((gb_encode(category.p_category.name), gb_encode(category.name), category.isIncome))
+    """
+
+    category_list = Category.objects.filter(user__username=request.user.username).filter(p_category__isnull=True)
+    new_list = []
+    new_list,level=get_category(category_list,new_list,0)
+
+    if not new_list:
+        pass
+    else:
+        for obj in new_list:
+            category = obj['category']
+            if not category.p_category:
+                writer.writerow((P_CATEGORY_NULL_NAME, gb_encode(category.name), category.isIncome))
+            else:
+                writer.writerow((gb_encode(category.p_category.name), gb_encode(category.name), category.isIncome))
+ 
 
     return response
     
@@ -428,8 +445,8 @@ def handle_uploaded_file_item(f, request):
         destination.write(chunk)
     destination.close()
     
-    csv_file = open('upload/csv/name.csv','rb')
-    reader = csv.reader(csv_file)
+    csv_file = open('upload/csv/name.csv','rU')
+    reader = csv.reader(csv_file, dialect='excel')
     i=0
     for line in reader:
         if i>0:
@@ -437,7 +454,7 @@ def handle_uploaded_file_item(f, request):
             if not category:
                 pass
             else:
-                data=Item(pub_date=datetime.datetime.strptime(line[0],"%Y-%m-%d"),
+                data=Item(pub_date=datetime.datetime.strptime(line[0],"%m/%d/%Y"),
                     price=line[1], 
                     category = category[0], 
                     comment = gb_decode(line[3]))
@@ -455,8 +472,9 @@ def handle_uploaded_file_category(f, request):
         destination.write(chunk)
     destination.close()
     
-    csv_file = open('upload/csv/name.csv','rb')
-    reader = csv.reader(csv_file)
+    csv_file = open('upload/csv/name.csv','rU')
+    reader = csv.reader(csv_file, dialect='excel')
+
     i=0
     for line in reader:
         if i>0:
