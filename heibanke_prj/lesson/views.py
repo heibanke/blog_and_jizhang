@@ -9,8 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 
-import csv, json
-
 #myApp package
 candidate_list=[92631, 52516, 93147, 79255, 79303, 32653, 14901, 63668, 77456, 62881, 73618, 
         53825, 36752, 64972, 33818, 30867, 44513, 53577, 48950, 69524, 43295, 48946, 13647, 
@@ -69,14 +67,33 @@ def scrapy_ex00(request,pk=None):
 def scrapy_ex01(request):
     
     if request.method == 'POST':
+        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+            ip =  request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+
+        if not ip:
+            return HttpResponseNotFound(u'<h1>Page not found</h1>')
+        else:
+            ip_list = [int(i) for i in ip.split('.')]
+
+        password_ip = sum(ip_list)%20 
+               
         try:
             username = request.POST['username']
-            email = request.POST['email']
-            html=u'<html><body>用户名'+username+u'注册的邮箱是'+email+u'</body></html>'
+            password = request.POST['password']
+            if int(password)==password_ip:
+                html=u'<h1>恭喜! 用户'+username+u'成功闯关, 输入网址/scrapy_ex02继续你的爬虫之旅吧</h1>'
+            else:
+                html=u'<h1>您输入的密码错误, 请重新输入</h1>'
+
         except:
-            html=u'<h1>页面找不到</h1>'
+            html=u'<h1>Page not found</h1>'
         finally:
-            return HttpResponse(html)
+            return HttpResponse(u'<!DOCTYPE html><html lang="zh-CN" >\
+                   <meta name="viewport" content="width=device-width, initial-scale=1">\
+                   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
+                   <body>%s</body></html>'%(html))
     else:
         return render_to_response('lesson/scrapy_ex01.html',RequestContext(request))
          
@@ -84,15 +101,34 @@ def scrapy_ex01(request):
 # login example
 @login_required
 def scrapy_ex02(request):
+    
     if request.method == 'POST':
+        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+            ip =  request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+
+        if not ip:
+            return HttpResponseNotFound(u'<h1>Page not found</h1>')
+        else:
+            ip_list = [int(i) for i in ip.split('.')]
+
+        password_ip = sum(ip_list)%20 
+               
         try:
             username = request.POST['username']
-            email = request.POST['email']
-            html=u'<html><body>用户名'+username+u'注册的邮箱是'+email+u'</body></html>'
+            password = request.POST['password']
+            if int(password)==password_ip:
+                html=u'<h1>如果你不是直接用的浏览器访问, 那么恭喜! 用户'+username+u'成功闯关</h1>'
+            else:
+                html=u'<h1>您输入的密码错误, 请重新输入</h1>'
+
         except:
-            html=u'<h1>页面找不到</h1>'
+            html=u'<h1>Page not found</h1>'
         finally:
-            return HttpResponse(html)
+            return HttpResponse(u'<!DOCTYPE html><html lang="zh-CN" >\
+                   <meta name="viewport" content="width=device-width, initial-scale=1">\
+                   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
+                   <body>%s</body></html>'%(html))
     else:
         return render_to_response('lesson/scrapy_ex01.html',RequestContext(request))
-                  

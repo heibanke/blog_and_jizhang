@@ -5,9 +5,9 @@
 
     <body><form method="post" action="">
         {% csrf_token %}
-        昵称: <input type="text" name="username"><br>
-        邮箱: <input type="text" name="email"><br>
-        <input type="submit" value="提交">
+        昵称:(随便输入字符)<br><input type="text" name="username"/><br><br>
+        密码:(30以内的数字)<br><input id="id_password" name="password" type="password" /><br><br>
+        <input id="id_submit" type="submit" value="提交">
         </form>
     </body>
 </html>
