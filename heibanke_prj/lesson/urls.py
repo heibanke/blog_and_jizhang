@@ -8,9 +8,9 @@ from lesson import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^scrapy_ex00/$', views.scrapy_ex00, name='scrapy_ex00'),    
-    url(r'^scrapy_ex00/(?P<pk>\d+)/$', views.scrapy_ex00, name='scrapy_ex00'),
-    url(r'^scrapy_ex01/$', views.scrapy_ex01, name='scrapy_ex01'),
-    url(r'^scrapy_ex02/$', views.scrapy_ex02, name='scrapy_ex02'),
+    url(r'^crawler_ex00/$', views.crawler_ex00, name='crawler_ex00'),    
+    url(r'^crawler_ex00/(?P<pk>\d+)/$', views.crawler_ex00, name='crawler_ex00'),
+    url(r'^crawler_ex01/$', views.crawler_ex01, name='crawler_ex01'),
+    url(r'^crawler_ex02/$', views.crawler_ex02, name='crawler_ex02'),
 
 )

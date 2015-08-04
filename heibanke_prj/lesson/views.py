@@ -22,7 +22,7 @@ candidate_list=[92631, 52516, 93147, 79255, 79303, 32653, 14901, 63668, 77456, 6
 
 
 # simple example for loop input url
-def scrapy_ex00(request,pk=None):
+def crawler_ex00(request,pk=None):
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip =  request.META['HTTP_X_FORWARDED_FOR']
     else:
@@ -47,7 +47,7 @@ def scrapy_ex00(request,pk=None):
             else:
                 index_num = candidate_list.index(num)
                 if index_num==start_index+49:
-                    html = u"<html><body><h1>恭喜你,你找到了答案.输入网址/scrapy_ex01继续你的爬虫之旅吧</h1></body></html>"
+                    html = u"<html><body><h1>恭喜你,你找到了答案.输入网址/crawler_ex01继续你的爬虫之旅吧</h1></body></html>"
                 else:
                     if index_num <2:
                         str_help = u''
@@ -64,7 +64,7 @@ def scrapy_ex00(request,pk=None):
 
 # form post example
 @csrf_exempt
-def scrapy_ex01(request):
+def crawler_ex01(request):
     
     if request.method == 'POST':
         if request.META.has_key('HTTP_X_FORWARDED_FOR'):
@@ -83,7 +83,7 @@ def scrapy_ex01(request):
             username = request.POST['username']
             password = request.POST['password']
             if int(password)==password_ip:
-                html=u'<h1>恭喜! 用户'+username+u'成功闯关, 输入网址/scrapy_ex02继续你的爬虫之旅吧</h1>'
+                html=u'<h1>恭喜! 用户'+username+u'成功闯关, 输入网址/crawler_ex02继续你的爬虫之旅吧</h1>'
             else:
                 html=u'<h1>您输入的密码错误, 请重新输入</h1>'
 
@@ -95,12 +95,12 @@ def scrapy_ex01(request):
                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
                    <body>%s</body></html>'%(html))
     else:
-        return render_to_response('lesson/scrapy_ex01.html',RequestContext(request))
+        return render_to_response('lesson/crawler_ex01.html',RequestContext(request))
          
 
 # login example
 @login_required
-def scrapy_ex02(request):
+def crawler_ex02(request):
     
     if request.method == 'POST':
         if request.META.has_key('HTTP_X_FORWARDED_FOR'):
@@ -119,7 +119,7 @@ def scrapy_ex02(request):
             username = request.POST['username']
             password = request.POST['password']
             if int(password)==password_ip:
-                html=u'<h1>如果你不是直接用的浏览器访问, 那么恭喜! 用户'+username+u'成功闯关</h1>'
+                html=u'<h1>如果你不是直接用的浏览器访问, 那么恭喜! 用户'+username+u'成功闯关, 后续关卡敬请期待</h1>'
             else:
                 html=u'<h1>您输入的密码错误, 请重新输入</h1>'
 
@@ -131,4 +131,4 @@ def scrapy_ex02(request):
                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
                    <body>%s</body></html>'%(html))
     else:
-        return render_to_response('lesson/scrapy_ex01.html',RequestContext(request))
+        return render_to_response('lesson/crawler_ex01.html',RequestContext(request))
