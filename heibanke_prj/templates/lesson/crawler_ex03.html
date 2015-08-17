@@ -1,8 +1,10 @@
-
 {% extends "base_ijizhang.html" %}
-{%block title%}爬虫闯关——2{%endblock%}
+{%block title%}爬虫闯关——4{%endblock%}
 
 {% block content %}
+{% include "welcome.html" %}
+
+<h2>密码很长, 试是试不出来的, 需要找出来的哦</h2>
 <form method="post" action="">
     {% csrf_token %}
     <div class="form-group">
@@ -10,7 +12,7 @@
         <input class="form-control" type="text" name="username"/>
     </div>
     <div class="form-group">
-        <label>密码:(30以内的数字)</label>
+        <label>密码:</label>
         <input class="form-control" id="id_password" name="password" type="password" />
     </div>
     <div class="form-group">

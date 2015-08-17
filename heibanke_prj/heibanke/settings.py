@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'heibanke.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-LANGUAGE_CODE = 'zh-CN'   #'en-us'
+LANGUAGE_CODE = 'zh-cn'   #'en-us'
 
 TIME_ZONE = 'UTC'
 

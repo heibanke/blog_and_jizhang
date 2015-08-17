@@ -1,0 +1,58 @@
+
+{% extends "base_ijizhang.html" %}
+{%block title%}第4关password列表{%endblock%}
+{%block extra_header%}
+
+{% endblock%}
+        
+{% block content %}
+{% include "welcome.html" %}
+
+<h2>这个网页的载入会慢半拍, 所以请耐心等待</h2>
+    <table class="table table-striped">
+        <tr class="info">
+            <td><strong>密码的位置</strong></td>
+            <td><strong>密码的值</strong></td>
+        </tr>
+
+        {% if item_list %}
+            {% for item in item_list %}
+            <tr class="{% cycle ,active %}">
+                <td data-toggle="tooltip" data-placement="left" title="password_pos">{{item.pos}}</td>
+                <td data-toggle="tooltip" data-placement="left" title="password_val">{{item.val}}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <p>出现问题，没有可用的密码</p>
+        {% endif %}
+
+
+    </table>
+      
+    <ul class="pagination">
+        {% if item_list.has_previous %}
+           <li><a href="?page={{ item_list.previous_page_number }}">&laquo;</a></li>
+        {% else%}
+           <li class="disable"><a>&laquo;</a></li>
+        {% endif %}
+        
+        {% for i in page_num_list %} 
+            {%if i > 0%}
+            <li {%ifequal item_list.number forloop.counter%}class="active"{%endifequal%}><a href="?page={{ i }}">{{i}}</a></li>
+            {%elif i == 0%}
+            <li><a><strong>...</strong></a></li>
+            {%endif%}
+        {% endfor %}
+        {% if item_list.has_next %}
+           <li><a href="?page={{ item_list.next_page_number }}">&raquo;</a></li>
+        {% else %}
+           <li class="disable"><a>&raquo;</a></li>
+        {% endif %}
+     </ul>
+  
+
+
+{%endblock%}
+
+
+

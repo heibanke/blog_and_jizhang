@@ -1,8 +1,10 @@
 
 {% extends "base_ijizhang.html" %}
-{%block title%}爬虫闯关——2{%endblock%}
+{%block title%}爬虫闯关——3{%endblock%}
 
 {% block content %}
+{% include "welcome.html" %}
+<h2>比上一关多了两层保护</h2>
 <form method="post" action="">
     {% csrf_token %}
     <div class="form-group">
