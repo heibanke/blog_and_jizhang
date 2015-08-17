@@ -171,7 +171,7 @@ def crawler_ex03(request):
             if password==password_ip:
                 html=u'<h1>恭喜用户'+username+u'成功闯关, 后续关卡敬请期待</h1>'
             else:
-                html=u'<h1>您输入的密码错误, 请重新输入</h1><p>偷偷告诉你, 密码可以从<a href="/lesson/crawler_03/pw_list/">下面这个网页里</a>获得</p>'
+                html=u'<h1>您输入的密码错误, 请重新输入</h1><p>偷偷告诉你, 密码可以从<a href="/lesson/crawler_ex03/pw_list/">下面这个网页里</a>获得</p>'
 
         except:
             html=u'<h1>您输入的密码格式错误</h1>'
