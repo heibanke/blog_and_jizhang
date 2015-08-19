@@ -4,6 +4,11 @@
 
 
 {% block content %}
+<div class="row">
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
+    
+    
 {% include "welcome.html" %}
 
 
@@ -39,8 +44,12 @@
 <p></p>
 <p>已经导入分类了</p>
 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>直接提交</button>
+<button  onclick="javascript:history.back(-1);" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> 返回</button>
+
 </form>
 
-{% include "footer_button.html" %}
+    </div>
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+</div> 
 
 {%endblock%}

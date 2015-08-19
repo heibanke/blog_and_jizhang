@@ -27,6 +27,9 @@
 
 
 {% block content %}
+<div class="row">
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
 {% include "welcome.html" %}
 
 <p><strong>{{last_save_item}}</strong></p>
@@ -71,11 +74,14 @@
 
 <p></p>
 <p></p>
-<button type="submit" class="btn btn-primary" name="return_list" value="1"><span class="glyphicon glyphicon-ok"></span> 保存并返回列表</button>
-<button type="submit" class="btn btn-primary" name="add_another" value="2"><span class="glyphicon glyphicon-ok"></span> 保存并继续新建</button>
+<button type="submit" class="btn btn-primary" name="return_list" value="1"><span class="glyphicon glyphicon-ok"></span> 保存并返回</button>
+<button type="submit" class="btn btn-primary" name="add_another" value="2"><span class="glyphicon glyphicon-plus"></span> 保存并继续</button>
+<button  onclick="javascript:history.back(-1);" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> 返回</button>
+
 </form>
 
 
-{% include "footer_button.html" %}
-
+    </div>
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+</div> 
 {%endblock%}

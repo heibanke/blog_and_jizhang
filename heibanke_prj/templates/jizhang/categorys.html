@@ -14,15 +14,21 @@
 {% endblock%}
         
 {% block content %}
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-3"></div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
 {% include "welcome.html" %}
-        <div>
-            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:new_category' %}"'><span class="glyphicon glyphicon-plus"></span> 新建分类</button>
-            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:export_to_category_csv' %}"'><span class="glyphicon glyphicon-save"></span> 导出</button>
-            <button type='button' class="btn btn-primary " onclick='javascrtpt:window.location.href="{% url 'jizhang:import_category_csv' %}"'><span class="glyphicon glyphicon-open"></span> 导入</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-            <span class="glyphicon glyphicon-trash"></span> 删除所选
-            </button>
+
+        <div class="btn-group btn-group-justified" role="group">
+            <a href="{% url 'jizhang:new_category' %}"            class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus"></span> 新建分类</a>
+            <a href="{% url 'jizhang:export_to_category_csv' %}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-floppy-save"></span> 导出分类</a>
+            <a href="{% url 'jizhang:import_category_csv' %}"    class="btn btn-primary" role="button"><span class="glyphicon glyphicon-floppy-open"></span> 导入分类</a>
+            <a data-toggle="modal" data-target="#myModal" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash"></span> 删除所选</a>
+
+            <!-- Button trigger modal -->
+
         </div>
+
         <form method="post" action="">
             {% csrf_token %}
 
@@ -32,7 +38,7 @@
                 <tr class="info"><td><strong>分类名称</strong></td>
                     <td><strong>父类名称</strong></td>
                     <td><strong>收入/支出</strong></td>
-                    <td><strong><input type="checkbox" id="all" />全选删除?</strong></td>
+                    <td><strong><input type="checkbox" id="all" />全选</strong></td>
                 </tr>
 
                 {% if category_list %}
@@ -72,5 +78,7 @@
         </form>
 
         {% include "footer_button.html" %}
-
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-3"></div>
+</div>
 {%endblock%}

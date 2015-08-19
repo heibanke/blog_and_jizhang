@@ -45,6 +45,8 @@ $(function(){ $(".table-striped").tablesorter(); });
 
 
 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+                <a type='button' class="btn btn-primary"  href="{% url 'jizhang:items' '' %}"><span class="glyphicon glyphicon-list"></span> 返回列表</a>
+
 </form>
 
 {% if table_data_shouru%}
@@ -106,6 +108,5 @@ $(function(){ $(".table-striped").tablesorter(); });
 {%endif%}
 
 
-{% include "footer_button.html" %}
 
 {%endblock%}
