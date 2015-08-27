@@ -1,12 +1,10 @@
-{% extends "base_ijizhang.html" %}
+{% extends "base_heibanke.html" %}
 {%block title%}新建/编辑分类{%endblock%}
 
 
 
 {% block content %}
-<div class="row">
-    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
-    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
+
 {% include "welcome.html" %}
 
 
@@ -41,10 +39,8 @@
 
 
 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> 提交</button>
-<button  onclick="javascript:history.back(-1);" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> 返回</button>
+<a type='button'  href="{% url 'jizhang:categorys' %}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
 
 </form>
-    </div>
-    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
-</div> 
+
 {%endblock%}

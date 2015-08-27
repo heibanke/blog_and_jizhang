@@ -1,13 +1,10 @@
-{% extends "base_ijizhang.html" %}
+{% extends "base_heibanke.html" %}
 {%block title%}登录{%endblock%}
 
 
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8 col-xs-12">
-        <h2> 欢迎来到我们站点 </h2>
+        <h2> 欢迎来到黑板客记账站点 </h2>
         <form action="" method="post" class="form"  role="form">
         {% csrf_token %}
 
@@ -48,7 +45,5 @@
             <li>导出表格进行备份</li>
             <li>导入以前记录的表格</li>
         </ul>
-    </div>
-    <div class="col-sm-2"></div>
-</div>    
+  
 {%endblock%}

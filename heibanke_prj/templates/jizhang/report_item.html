@@ -1,4 +1,4 @@
-{% extends "base_ijizhang.html" %}
+{% extends "base_heibanke.html" %}
 {%block title%}生成报表{%endblock%}
 
 {%block extra_header%}
@@ -11,9 +11,8 @@ $(function(){ $(".table-striped").tablesorter(); });
 
 
 
-{% block content %}
+{% block wcontent %}
 {% include "welcome.html" %}
-
 
 <form method="post" action=""  role="form" >
 {% csrf_token %}
