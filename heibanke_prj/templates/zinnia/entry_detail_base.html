@@ -4,12 +4,10 @@
 
 {% block link %}
   {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static "zinnia_threaded_comments/css/comment-reply.css" %}" />
 {% endblock link %}
 
 {% block script %}
   {{ block.super }}
-  {% if object.comments_are_open %}<script type="text/javascript" src="{% static "zinnia_threaded_comments/js/comment-reply.js" %}"></script>{% endif %}
 {% endblock %}
 
 

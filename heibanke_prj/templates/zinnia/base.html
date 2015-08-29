@@ -21,12 +21,7 @@
   </div>
   {% get_categories %}
 </aside>
-<aside id="widget-authors" class="widget panel panel-default">
-  <div class="panel-heading">
-    {% trans "作者" %}
-  </div>
-  {% get_authors %}
-</aside>
+
 <aside id="widget-recents" class="widget panel panel-default">
   <div class="panel-heading">
     {% trans "最近文章" %}
@@ -37,7 +32,7 @@
   <div class="panel-heading">
     {% trans "最近评论" %}
   </div>
-  {% get_recent_comments %}
+  <ul  class="ds-recent-comments" data-num-items="10" data-show-avatars="0" data-show-time="1" data-show-admin="1" data-excerpt-length="39"></ul>
 </aside>
 <!--
 <aside id="widget-linkbacks" class="widget panel panel-default">
@@ -47,18 +42,37 @@
   {% get_recent_linkbacks %}
 </aside>
 -->
-<aside id="widget-randoms" class="widget panel panel-default">
-  <div class="panel-heading">
-    {% trans "随机文章" %}
-  </div>
-  {% get_random_entries %}
-</aside>
 <aside id="widget-populars" class="widget panel panel-default">
   <div class="panel-heading">
     {% trans "最热文章" %}
   </div>
   {% get_popular_entries %}
 </aside>
+
+<aside id="widget-randoms" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "随机文章" %}
+  </div>
+  {% get_random_entries %}
+</aside>
+
+<aside id="widget-authors" class="widget panel panel-default">
+  <div class="panel-heading">
+    {% trans "链接" %}
+  </div>
+<ul class="list-group">
+  
+  <li class="list-group-item">
+    <a href="/jizhang/" title="记账" rel="bookmark">网络记账</a>
+  </li>
+  
+  <li class="list-group-item">
+    <a href="/lesson/crawler_ex00/" title="闯关" rel="bookmark">开始闯关</a>
+  </li>
+  
+</ul>
+</aside>
+
 {% if user.is_authenticated %}
 <aside id="widget-tools" class="widget panel panel-danger">
   <div class="panel-heading">
@@ -111,6 +125,8 @@ var duoshuoQuery = {short_name:"heibanke"};
   })();
   </script>
 <!-- 多说公共JS代码 end -->
+
+
 {% endblock %}
 
 

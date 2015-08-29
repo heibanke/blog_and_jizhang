@@ -63,16 +63,16 @@
                 {% trans "分类" %}
               </a>
             </li>
-            {% url 'zinnia:author_list' as author_list_url %}
-            <li {% if author_list_url in request.path %}class="active"{% endif %}>
-              <a href="{{ author_list_url }}" title="{% trans "Author List" %}">
-                {% trans "作者" %}
-              </a>
-            </li>
             {% url 'zinnia:tag_list' as tag_list_url %}
             <li {% if tag_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ tag_list_url }}" title="{% trans "Tags" %}">
                 {% trans "标签" %}
+              </a>
+            </li>            
+            {% url 'zinnia:author_list' as author_list_url %}
+            <li {% if author_list_url in request.path %}class="active"{% endif %}>
+              <a href="{{ author_list_url }}" title="{% trans "Author List" %}">
+                {% trans "作者" %}
               </a>
             </li>
             <li class="divider-vertical"></li>
