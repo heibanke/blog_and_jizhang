@@ -1,8 +1,11 @@
 
-{% extends "base_heibanke.html" %}
+{% extends "base_ijizhang.html" %}
 {%block title%}爬虫闯关——2{%endblock%}
 
 {% block content %}
+<h1>这里是黑板客爬虫闯关的第二关</h1>
+<h3>{{content}}</h3>
+{%if isget%}
 <form method="post" action="">
     {% csrf_token %}
     <div class="form-group">
@@ -10,11 +13,16 @@
         <input class="form-control" type="text" name="username"/>
     </div>
     <div class="form-group">
-        <label>密码:(30以内的数字)</label>
+        <label>密码:(30以内的数字,猜对它就能过关)</label>
         <input class="form-control" id="id_password" name="password" type="password" />
     </div>
     <div class="form-group">
         <input class="btn btn-primary" id="id_submit" type="submit" value="提交">
     </div>
 </form>
+{%endif%}
+{%if next_link%}
+<a href="{%url 'lesson:crawler_ex02'%}" class="btn btn-primary">下一关</a>
+{%endif%}
+
 {%endblock%}

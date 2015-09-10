@@ -1,10 +1,14 @@
-{% extends "base_heibanke.html" %}
+{% extends "base_ijizhang.html" %}
 {%block title%}爬虫闯关——4{%endblock%}
 
 {% block content %}
 {% include "welcome.html" %}
+<h1>这里是黑板客爬虫闯关的第四关</h1>
 
-<h2>密码很长, 试是试不出来的, 需要找出来的哦</h2>
+<h3>{{content}}</h3>
+
+{%if isget%}
+
 <form method="post" action="">
     {% csrf_token %}
     <div class="form-group">
@@ -19,4 +23,9 @@
         <input class="btn btn-primary" id="id_submit" type="submit" value="提交">
     </div>
 </form>
+{%endif%}
+{%if next_link%}
+<p>偷偷告诉你，密码可以从下面的链接找到<p>
+<a href="{%url 'lesson:crawler_ex03_pw_list'%}" class="btn btn-primary">在这里耐心找</a>
+{%endif%}
 {%endblock%}

@@ -8,7 +8,7 @@ from jizhang import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', views.items),
+    url(r'^$', views.items, name="index"),
     url(r'^items/(p?)$', views.items, name='items'),
     url(r'^first_login/', views.first_login, name='first_login'),
     url(r'^categorys/', views.categorys, name='categorys'),

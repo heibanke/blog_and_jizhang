@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
-
+ALLOW_CHAR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 class RegisterForm(forms.Form):
     username=forms.CharField(label=_(u"昵称"),max_length=40,widget=forms.TextInput(attrs={'size': 40,'class':"form-control"}))
@@ -14,6 +14,13 @@ class RegisterForm(forms.Form):
 
     def clean_username(self):
         '''验证重复昵称'''
+        if len(self.cleaned_data["username"])<4:
+            raise forms.ValidationError(u"昵称长度不能小于4")
+        else:    
+            for a in self.cleaned_data["username"]:
+                if a not in ALLOW_CHAR:
+                    raise forms.ValidationError(u"昵称仅能用字母或数字")
+            
         users = User.objects.filter(username__iexact=self.cleaned_data["username"])
         if not users:
             return self.cleaned_data["username"]
@@ -26,6 +33,15 @@ class RegisterForm(forms.Form):
             return self.cleaned_data["email"]
         raise forms.ValidationError(_(u"该邮箱已经被使用请使用其他的"))
 		
+    def clean_password(self):
+        if len(self.cleaned_data["password"])<6:
+            raise forms.ValidationError(u"密码长度不能小于6")
+        else:    
+            for a in self.cleaned_data["password"]:
+                if a not in ALLOW_CHAR:
+                    raise forms.ValidationError(u"密码仅能用字母或数字")    
+        return self.cleaned_data["password"]
+        
     def clean(self):
         """验证其他非法"""
         cleaned_data = super(RegisterForm, self).clean()

@@ -39,87 +39,96 @@ def crawler_ex00(request,pk=None):
         ip = request.META['REMOTE_ADDR']
 
     if not ip:
-        return HttpResponseNotFound(u'<h1>页面找不到</h1>')
+        content = u'页面找不到'
+        return render(request,'lesson/crawler_ex00.html',{'content':content})
     else:
         ip_list = [int(i) for i in ip.split('.')]
 
     start_index = sum(ip_list)%50
 
-
+    next_link=""
+    
     if not pk:
-        return HttpResponseNotFound(u'<h1>你需要在网址后输入数字<strong>%d</strong></h1>'%candidate_list[start_index])
+        content = u'你需要在网址后输入数字%d'%candidate_list[start_index]
+        return render(request,'lesson/crawler_ex00.html',{'content':content})
 
     else:    
         try:
             num = int(pk)
             if num not in candidate_list:
-                return HttpResponseNotFound(u'<h1>%s输入不正确, 请输入正确数字</h1>'%pk)
+                content = u'%s输入不正确, 请输入正确数字'%pk
             else:
                 index_num = candidate_list.index(num)
                 if index_num==start_index+49:
-                    html = u"<html><body><h1>恭喜你,你找到了答案.输入网址/crawler_ex01继续你的爬虫之旅吧</h1></body></html>"
+                    content = u"恭喜你,你找到了答案.继续你的爬虫之旅吧"
+                    next_link = u"/lesson/crawler_ex01"
                 else:
-                    if index_num <2:
+                    if (index_num-start_index) <3:
                         str_help = u''
-                    elif index_num < 8:
+                    elif (index_num-start_index) < 8:
                         str_help = u'还有一大波数字马上就要到来...'
                     else:
                         str_help = u'老实告诉你吧, 这样的数字还有上百个'
-                    html = u"<html><body><h1>下一个你需要输入的数字是<strong>%d</strong>. %s</h1></body></html>" % (candidate_list[index_num+1],str_help)
-                return HttpResponse(html)            
+                    content = u"下一个你需要输入的数字是%d. %s" % (candidate_list[index_num+1],str_help)
+            
+            return render(request,'lesson/crawler_ex00.html',{'content':content,'next_link':next_link})
         except:
+            
+            content = u'%s输入不正确, 请输入正确数字'%pk
+            return render(request,'lesson/crawler_ex00.html',{'content':content,'next_link':next_link})
 
-            return HttpResponseNotFound(u'<h1>%s输入不正确, 请输入正确数字</h1>'%pk)
 
 
 # form post example
 @csrf_exempt
 def crawler_ex01(request):
-    
+    isget = True
+    next_link=""
     if request.method == 'POST':
+        isget = False
+        
         if request.META.has_key('HTTP_X_FORWARDED_FOR'):
             ip =  request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
 
         if not ip:
-            return HttpResponseNotFound(u'<h1>Page not found</h1>')
+            return render(request,'lesson/crawler_ex01.html',{'content':u'Your Page not found'})
         else:
             ip_list = [int(i) for i in ip.split('.')]
 
         password_ip = sum(ip_list)%30 
-               
         try:
             username = request.POST['username']
             password = request.POST['password']
             if int(password)==password_ip:
-                html=u'<h1>恭喜! 用户'+username+u'成功闯关, 输入网址/crawler_ex02继续你的爬虫之旅吧</h1>'
+                content=u'恭喜! 用户'+username+u'成功闯关, 继续你的爬虫之旅吧'
+                next_link = "lesson/crawler_ex02"
             else:
-                html=u'<h1>您输入的密码错误, 请重新输入</h1>'
+                content=u'您输入的密码错误, 请重新输入'
 
         except:
-            html=u'<h1>密码只有数字哦</h1>'
+            content=u'密码只有数字哦'
         finally:
-            return HttpResponse(u'<!DOCTYPE html><html lang="zh-CN" >\
-                   <meta name="viewport" content="width=device-width, initial-scale=1">\
-                   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
-                   <body>%s</body></html>'%(html))
+            return render(request,'lesson/crawler_ex01.html',{'content':content,'isget':isget,'next_link':next_link})
     else:
-        return render_to_response('lesson/crawler_ex01.html',RequestContext(request))
+        return render(request,'lesson/crawler_ex01.html',{'isget':isget})
          
 
 # login example
 @login_required
 def crawler_ex02(request):
-    
+    isget = True
+    next_link=""
     if request.method == 'POST':
+        isget = False
         if request.META.has_key('HTTP_X_FORWARDED_FOR'):
             ip =  request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
 
         if not ip:
-            return HttpResponseNotFound(u'<h1>Page not found</h1>')
+            return render(request,'lesson/crawler_ex02.html',{'content':u'Your Page not found'})
         else:
             ip_list = [int(i) for i in ip.split('.')]
 
@@ -129,32 +138,35 @@ def crawler_ex02(request):
             username = request.POST['username']
             password = request.POST['password']
             if int(password)==password_ip:
-                html=u'<h1>恭喜! 用户'+username+u'成功闯关, 输入网址/crawler_ex03/继续你的爬虫之旅吧</h1>'
+                content=u'恭喜! 用户'+username+u'成功闯关, 继续你的爬虫之旅吧'
+                next_link = "lesson/crawler_ex03"
             else:
-                html=u'<h1>您输入的密码错误, 请重新输入</h1>'
+                content=u'您输入的密码错误, 请重新输入'
 
         except:
-            html=u'<h1>密码只有数字哦</h1>'
+            content=u'密码只有数字哦'
         finally:
-            return HttpResponse(u'<!DOCTYPE html><html lang="zh-CN" >\
-                   <meta name="viewport" content="width=device-width, initial-scale=1">\
-                   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
-                   <body>%s</body></html>'%(html))
+            return render(request,'lesson/crawler_ex02.html',{'content':content,'isget':isget,'next_link':next_link})
+
     else:
-        return render_to_response('lesson/crawler_ex02.html',RequestContext(request))
+        content = u'比上一关多了两层保护'
+        return render(request,'lesson/crawler_ex02.html',{'content':content,'isget':isget})
         
         
 @login_required
 def crawler_ex03(request):
-    
+    isget = True
+    next_link=""
     if request.method == 'POST':
+        isget = False
+
         if request.META.has_key('HTTP_X_FORWARDED_FOR'):
             ip =  request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
 
         if not ip:
-            return HttpResponseNotFound(u'<h1>Page not found</h1>')
+            return render(request,'lesson/crawler_ex03.html',{'content':u'Your Page not found'})
         else:
             ip_list = [int(i) for i in ip.split('.')]
 
@@ -169,19 +181,19 @@ def crawler_ex03(request):
             username = request.POST['username']
             password = request.POST['password']
             if password==password_ip:
-                html=u'<h1>恭喜用户'+username+u'成功闯关, 后续关卡敬请期待</h1>'
+                content=u'<h1>恭喜用户'+username+u'成功闯关, 后续关卡敬请期待</h1>'
             else:
-                html=u'<h1>您输入的密码错误, 请重新输入</h1><p>偷偷告诉你, 密码可以从<a href="/lesson/crawler_ex03/pw_list/">下面这个网页里</a>获得</p>'
+                content=u'您输入的密码错误, 请重新输入'
+                next_link='lesson/pw_list'
 
         except:
-            html=u'<h1>您输入的密码格式错误</h1>'
+            content=u'您输入的密码格式错误'
         finally:
-            return HttpResponse(u'<!DOCTYPE html><html lang="zh-CN" >\
-                   <meta name="viewport" content="width=device-width, initial-scale=1">\
-                   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >\
-                   <body>%s</body></html>'%(html))
+            return render(request,'lesson/crawler_ex03.html',{'content':content,'isget':isget,'next_link':next_link})
+
     else:
-        return render_to_response('lesson/crawler_ex03.html',RequestContext(request))   
+        content = u'密码很长, 试是试不出来的, 需要找出来的哦'
+        return render(request,'lesson/crawler_ex03.html',{'content':content,'isget':isget})   
 
 
 @login_required

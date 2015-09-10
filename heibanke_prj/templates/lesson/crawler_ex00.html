@@ -1,0 +1,12 @@
+
+{% extends "base_ijizhang.html" %}
+{%block title%}爬虫闯关——1{%endblock%}
+
+{% block content %}
+<h1>这里是黑板客爬虫闯关的第一关</h1>
+<h3>{{content}}</h3>
+{%if next_link%}
+<a href="{%url 'lesson:crawler_ex01'%}" class="btn btn-primary">下一关</a>
+{%endif%}
+
+{%endblock%}
