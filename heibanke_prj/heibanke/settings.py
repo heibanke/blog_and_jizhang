@@ -95,9 +95,9 @@ WSGI_APPLICATION = 'heibanke.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-LANGUAGE_CODE = 'zh-cn'   #'en-us'
+LANGUAGE_CODE = 'zh-hans'   #'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -133,6 +133,7 @@ CACHES = {
         'TIMEOUT': None,
     }
 }
+
 
 ZINNIA_MARKUP_LANGUAGE='markdown'  #markdown or restructuredtext
 
