@@ -376,24 +376,36 @@ def gb_encode(val):
 def gb_decode(val):
     return (val.decode('gb2312').encode('utf-8'))
     
-    
+import zipfile
+
 @login_required
 def export_to_item_csv(request):
 
-    response = HttpResponse(content_type='text/csv')
-    filename = 'export_item_'+datetime.datetime.now().strftime("%Y-%m-%d")+'.csv'
-    response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
-    writer = csv.writer(response)
+    #response = HttpResponse(content_type='text/csv')
+    #filename = 'export_item_'+datetime.datetime.now().strftime("%Y-%m-%d")+'.csv'
+    #response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+    #writer = csv.writer(response)
 
+    filename = "export_item_%s_%s.csv"%(request.user.username,datetime.datetime.now().strftime("%Y-%m-%d"))
+    with open(filename, 'wb') as csvfile:
+        writer = csv.writer(csvfile,dialect='excel')
 
+        writer.writerow((gb_encode(u'日期'),gb_encode(u'价格'),gb_encode(u'分类'),gb_encode(u'备注')))
+        items = Item.objects.filter(category__user__username=request.user.username).order_by('pub_date')
+        if not items:
+            pass
+        else:
+            for item in items:
+                writer.writerow((item.pub_date.strftime("%m/%d/%Y"), item.price, gb_encode(item.category.name), gb_encode(item.comment)))
 
-    writer.writerow((gb_encode(u'日期'),gb_encode(u'价格'),gb_encode(u'分类'),gb_encode(u'备注')))
-    items = Item.objects.filter(category__user__username=request.user.username).order_by('pub_date')
-    if not items:
-        pass
-    else:
-        for item in items:
-            writer.writerow((item.pub_date.strftime("%m/%d/%Y"), item.price, gb_encode(item.category.name), gb_encode(item.comment)))
+    zip_name = 'export_item_'+str(request.user.username)+'.zip'
+    f = zipfile.ZipFile(zip_name, 'w' ,zipfile.ZIP_DEFLATED) 
+    f.write(filename) 
+    f.close()
+
+    wrapper = FileWrapper(file(zip_name))
+    response = HttpResponse(wrapper, content_type='application/zip')  
+    response['Content-Disposition'] = 'attachment; filename='+zip_name  
 
     return response
 
