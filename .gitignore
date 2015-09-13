@@ -57,6 +57,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# csv, zip
+# csv, zip, out
 *.csv
 *.zip
+*.out

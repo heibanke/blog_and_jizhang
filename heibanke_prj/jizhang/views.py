@@ -377,6 +377,7 @@ def gb_decode(val):
     return (val.decode('gb2312').encode('utf-8'))
     
 import zipfile
+from django.core.servers.basehttp import FileWrapper
 
 @login_required
 def export_to_item_csv(request):
