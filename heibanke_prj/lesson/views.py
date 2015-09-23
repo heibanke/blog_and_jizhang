@@ -24,6 +24,8 @@ candidate_list=[92631, 52516, 93147, 79255, 79303, 32653, 14901, 63668, 77456, 6
         35102, 75956, 19122, 54168, 13871]
 
 PW_EX03_IP_MOD = 33
+PW_EX02_IP_MOD = 27
+PW_EX01_IP_MOD = 30
 PW_EX03_LEN = 20        
         
 class PW_Item(object):
@@ -97,7 +99,7 @@ def crawler_ex01(request):
         else:
             ip_list = [int(i) for i in ip.split('.')]
 
-        password_ip = sum(ip_list)%30 
+        password_ip = sum(ip_list)%PW_EX01_IP_MOD 
         try:
             username = request.POST['username']
             password = request.POST['password']
@@ -132,7 +134,7 @@ def crawler_ex02(request):
         else:
             ip_list = [int(i) for i in ip.split('.')]
 
-        password_ip = sum(ip_list)%30 
+        password_ip = sum(ip_list)%PW_EX02_IP_MOD 
                
         try:
             username = request.POST['username']
