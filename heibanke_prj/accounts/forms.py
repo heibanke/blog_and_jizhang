@@ -2,15 +2,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from captcha.fields import CaptchaField
 
 # Register your models here.
 ALLOW_CHAR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 class RegisterForm(forms.Form):
-    username=forms.CharField(label=_(u"昵称"),max_length=40,widget=forms.TextInput(attrs={'size': 40,'class':"form-control"}))
-    email=forms.EmailField(label=_(u"邮件"),max_length=40,widget=forms.EmailInput(attrs={'size': 40,'class':"form-control"}))    
-    password=forms.CharField(label=_(u"密码"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
-    re_password=forms.CharField(label=_(u"重复密码"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
+    username=forms.CharField(label=_(u"昵称(必填)"),max_length=40,widget=forms.TextInput(attrs={'size': 40,'class':"form-control"}))
+    email=forms.EmailField(label=_(u"邮件(必填)"),max_length=40,widget=forms.EmailInput(attrs={'size': 40,'class':"form-control"}))    
+    password=forms.CharField(label=_(u"密码(必填)"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
+    re_password=forms.CharField(label=_(u"重复密码(必填)"),max_length=20,widget=forms.PasswordInput(attrs={'size': 20,'class':"form-control"}))
+    captcha = CaptchaField(label=_(u"验证码(必填)"))
 
     def clean_username(self):
         '''验证重复昵称'''

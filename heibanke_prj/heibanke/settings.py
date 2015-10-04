@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'jizhang',
     'lesson',
     'mptt',
+    'captcha',
     'tagging',
     'zinnia_bootstrap',#zinnia_foundation,zinnia_bootstrap
     'zinnia',    

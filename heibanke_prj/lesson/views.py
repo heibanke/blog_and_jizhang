@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 from jizhang.views import split_page
+from lesson.forms import  Crawler04Form
+
 
 import random
 import time
@@ -23,6 +25,7 @@ candidate_list=[92631, 52516, 93147, 79255, 79303, 32653, 14901, 63668, 77456, 6
         51103, 39603, 34316, 55719, 53685, 77771, 69187, 89677, 71935, 98538, 79152, 70999, 
         35102, 75956, 19122, 54168, 13871]
 
+PW_EX04_IP_MOD = 23
 PW_EX03_IP_MOD = 33
 PW_EX02_IP_MOD = 29
 PW_EX01_IP_MOD = 30
@@ -183,7 +186,8 @@ def crawler_ex03(request):
             username = request.POST['username']
             password = request.POST['password']
             if password==password_ip:
-                content=u'<h1>恭喜用户'+username+u'成功闯关, 后续关卡敬请期待</h1>'
+                content=u'恭喜! 用户'+username+u'成功闯关, 继续你的爬虫之旅吧'
+                next_link = "lesson/crawler_ex04"
             else:
                 content=u'您输入的密码错误, 请重新输入'
                 next_link='lesson/pw_list'
@@ -228,3 +232,49 @@ def crawler_ex03_pw_list(request):
     context = {'item_list': item_page,'username':request.user.username,'page_num_list':page_num_list}
     time.sleep(15)
     return render_to_response('lesson/pw_list.html', context,context_instance=RequestContext(request))    
+
+
+
+# login example
+@login_required
+def crawler_ex04(request):
+    isget = True
+    next_link=""
+    form = Crawler04Form() 
+    if request.method == 'POST':
+
+        isget = False
+        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+            ip =  request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+
+        if not ip:
+            return render(request,'lesson/crawler_ex04.html',{'content':u'Your Page not found'})
+        else:
+            ip_list = [int(i) for i in ip.split('.')]
+
+        password_ip = sum(ip_list)%PW_EX04_IP_MOD 
+       
+        form=Crawler04Form(request.POST)
+        if form.is_valid():
+
+            try:
+                username = request.POST['username']
+                password = request.POST['password']
+                if int(password)==password_ip:
+                    content=u'恭喜! 用户'+username+u'成功闯关, 后续关卡敬请期待'
+                    return render(request,'lesson/crawler_ex04.html',{'content':content,'isget':isget,'next_link':next_link})
+                else:
+                    content=u'您输入的密码错误, 请重新输入'
+
+            except:
+                content=u'密码只有数字哦'
+        else:
+            content=u"验证码输入错误"
+        
+        return render(request,'lesson/crawler_ex04.html',{'form':form, 'content':content,'isget':isget,'next_link':next_link})
+    else:
+        content = u'加了验证码'
+        return render(request,'lesson/crawler_ex04.html',{'form':form,'content':content,'isget':isget})
+        

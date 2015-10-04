@@ -1,0 +1,34 @@
+{% extends "base_heibanke.html" %}
+{%block title%}爬虫闯关——5{%endblock%}
+
+{% block content %}
+{% include "welcome.html" %}
+<h1>这里是黑板客爬虫闯关的第五关</h1>
+
+<h3>{{content}}</h3>
+
+
+<form method="post" action="">
+    {% csrf_token %}
+    {% for field in form %}
+
+        {% if field.field.widget.attrs.checkbox %}
+            <div class="checkbox">
+            
+            {{ field }}{{ field.label }} 
+            </div>
+
+        {% else %}
+            <div class="form-group">
+            {{ field.label_tag }} 
+            {{ field }}
+            </div>
+        {% endif %}
+
+    {% endfor %}
+    <div class="form-group">
+        <input class="btn btn-primary" id="id_submit" type="submit" value="提交">
+    </div>
+</form>
+
+{%endblock%}
