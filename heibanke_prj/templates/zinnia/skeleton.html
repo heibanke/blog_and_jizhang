@@ -16,6 +16,115 @@
     <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.min.css" %}" />
     <link rel="stylesheet" href="{% static "libs/highlightjs/monokai_sublime.min.css" %}" />  
 
+
+    <style type="text/css">
+      .zinnia article{
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e6eaed;
+      }
+      .zinnia a, .zinnia article .entry-header, .zinnia article .entry-body, .zinnia article footer{
+        font-family: 'Open Sans', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
+        /*word-break: break-all;*/
+        line-height: 22px;
+      }
+      .zinnia a:hover,a:focus {
+        text-decoration:none;
+        color: #38485a;
+      }
+      .zinnia h1,h2,h3,h4,h5,h6 {
+        font-weight:bold;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      div.hfeed article:first-of-type header.entry-header {
+        margin-top: 0;
+      }
+      .container code {white-space: normal;}
+      .container pre code {white-space: pre-wrap;}
+      
+      p {
+        line-height: 1.896;
+        color: #303338;
+        }
+        .entry-body h1 {
+            font-size: 26px;
+        }
+        .entry-body h2 {
+            font-size: 24px;
+        }
+        .entry-body h3 {
+            font-size: 22px;
+        }
+        .entry-body h4 {
+            font-size: 20px;
+        }
+        .entry-body h5, .entry-body h6{
+            font-size: 18px;
+        }
+        .breadcrumb, .entry-content.lead {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .entry-header.page-header .entry-title{
+            font-size: 24px;
+        }
+        header.page-header {
+        margin: 20px 0 20px;
+        }
+        article {
+            overflow:hidden;
+        }
+      
+      pre {
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 3px;
+        border: 1px solid #C3CCD0;
+        background: #FFF;
+        overflow: hidden;
+        }
+      @media (max-width: 768px) {
+      .pre-numbering {
+        display:none;
+        }
+      }
+      
+      @media (min-width: 768px) {
+        code.hljs {
+        display: block;
+        padding: 8px 12px; 
+        overflow-y: auto;
+        font-weight: 300;
+        font-family: Menlo, monospace;
+        }
+        code.has-numbering {
+        margin-left: 21px;
+        }
+        .pre-numbering {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 25px;
+        padding: 18px 2px 12px 0;
+        border-right: 1px solid #C3CCD0;
+        border-radius: 3px 0 0 3px;
+        background-color: #EEE;
+        text-align: right;
+        font-family: Menlo, monospace;
+        font-size: 13px;
+        color: #777;
+        list-style:none;
+        }
+      }
+      .hfeed .breadcrumb {
+        margin-bottom: 0;
+      }
+    </style>
+
+
     <style type="text/css">
       body {
         padding-top: 70px;

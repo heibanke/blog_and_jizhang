@@ -20,11 +20,13 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^accounts/',include('accounts.urls',namespace='accounts')),
-	url(r'^jizhang/',include('jizhang.urls',namespace='jizhang')),
-    url(r'^lesson/',include('lesson.urls',namespace='lesson')),
-	#url(r'^$',include('zinnia.urls',namespace='zinnia')),
-    url(r'^',include('zinnia.urls',namespace='zinnia')),
+	url(r'^accounts/',include('accounts.urls',namespace=u'accounts')),
+	url(r'^jizhang/',include('jizhang.urls',namespace=u'jizhang')),
+    url(r'^lesson/',include('lesson.urls',namespace=u'lesson')),
+	url(r'^captcha/', include('captcha.urls')),
+    #url(r'^blog/',include('zinnia.urls',namespace=u'zinnia')),
     url(r'^comments/',include('django_comments.urls')),
-    url(r'^captcha/', include('captcha.urls')),
+    url(r'^',include('zinnia.urls',namespace='zinnia')),
 ]
+
+    

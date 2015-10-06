@@ -44,11 +44,11 @@ INSTALLED_APPS = (
     'jizhang',
     'lesson',
     'mptt',
-    'captcha',
     'tagging',
+    'zinnia',     
     'zinnia_bootstrap',#zinnia_foundation,zinnia_bootstrap
-    'zinnia',    
     'zinnia_wymeditor',#zinnia_wymeditor,zinnia_ckeditor
+    'captcha',
 )
 
 MIDDLEWARE_CLASSES = (
